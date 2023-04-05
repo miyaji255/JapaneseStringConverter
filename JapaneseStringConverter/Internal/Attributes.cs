@@ -1,4 +1,5 @@
-﻿namespace System.Diagnostics.CodeAnalysis
+﻿#if NET462
+namespace System.Diagnostics.CodeAnalysis
 {
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.ReturnValue, AllowMultiple = true, Inherited = false)]
     internal sealed class NotNullIfNotNullAttribute : Attribute
@@ -8,3 +9,4 @@
         public NotNullIfNotNullAttribute(string parameterName) => ParameterName = parameterName;
     }
 }
+#endif

@@ -1,4 +1,4 @@
-﻿#pragma warning disable IDE0057 // 範囲演算子を使用
+﻿#pragma warning disable IDE0057
 using System;
 using System.Runtime.CompilerServices;
 using JapaneseStringConverter.Internal;
@@ -9,8 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace JapaneseStringConverter
 {
-
-
     public static class StringExtensions
     {
         /// <summary>
