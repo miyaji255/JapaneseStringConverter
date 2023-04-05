@@ -1,0 +1,19 @@
+name: CI
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET6 SDK 
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: Install dependencies
+        run: dotnet restore JapaneseStringConverter.sln
+      - name: Build ConsoleApp
+        run: dotnet build JapaneseStringConverter.sln --configuration Release --no-restore
+      - name: Test 
+        run: dotnet test JapaneseStringConverter.sln --no-restore
