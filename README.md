@@ -1,0 +1,3 @@
+# JapaneseStringConverter
+
+JapaneseStringConverter は高速で低アロケーションな日本語変換ライブラリです。

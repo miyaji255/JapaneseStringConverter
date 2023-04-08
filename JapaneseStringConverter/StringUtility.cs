@@ -1,12 +1,15 @@
 ﻿using System;
 using JapaneseStringConverter.Internal;
 
-#if !NET472
+#if !NETFRAMEWORK
 using System.Diagnostics.CodeAnalysis;
 #endif
 
 namespace JapaneseStringConverter
 {
+    /// <summary>
+    /// 文字列を変換する関数を提供します
+    /// </summary>
     public static class StringUtility
     {
         /// <summary>
@@ -22,7 +25,11 @@ namespace JapaneseStringConverter
         /// </summary>
         internal const int MaxWideCharLimit = MaxByteLimit / 2;
 
-#if !NET472
+        /// <summary>
+        /// ConvertTargets でしたものに文字列を変換します
+        /// </summary>
+        /// <exception cref="ArgumentException"></exception>
+#if !NETFRAMEWORK
         [return: NotNullIfNotNull("source")]
 #endif
         public static string? Convert(string? source, ConvertTargets targets)

@@ -28,6 +28,18 @@ namespace JapaneseStringConverter.Internal
                         case <= '↓':
                             destination[length++] = (char)(target - '←' + '￩');
                             continue;
+                        case < '■': // U+25A0
+                            destination[length++] = target;
+                            continue;
+                        case '■': // U+25A0
+                            destination[length++] = '￭';
+                            continue;
+                        case < '○': // U+25CB
+                            destination[length++] = target;
+                            continue;
+                        case '○': // U+25CB
+                            destination[length++] = '￮';
+                            continue;
                         case < '\u3000':
                             destination[length++] = target;
                             continue;
@@ -230,7 +242,7 @@ namespace JapaneseStringConverter.Internal
                             destination[length++] = '¦';
                             continue;
                         case '￥': // U+FFE5
-                            destination[length++] = '¥';
+                            destination[length++] = '\\';
                             continue;
                         case '￦': // U+FFE6
                             destination[length++] = '₩';
@@ -264,7 +276,8 @@ namespace JapaneseStringConverter.Internal
                             destination[length++] = '\u3000';
                             continue;
                         case <= '~': // U+0021 ~ U+007E
-                            destination[length++] = (char)(target - '!' + '！');
+                            // U+201D足す
+                            destination[length++] = target == '\\' ? '￥' : (char)(target - '!' + '！');
                             continue;
                         case < '\u00A2':
                             destination[length++] = target;

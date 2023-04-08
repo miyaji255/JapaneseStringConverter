@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6;net472</TargetFrameworks>
+    <TargetFrameworks>net6;net462</TargetFrameworks>
 	  <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
 	  
@@ -12,9 +12,10 @@
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<ImplicitUsings>disable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net472' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
     <PackageReference Include="System.Memory" Version="4.5.5" />
   </ItemGroup>
 

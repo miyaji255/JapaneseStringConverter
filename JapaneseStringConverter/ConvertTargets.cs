@@ -2,6 +2,9 @@
 
 namespace JapaneseStringConverter
 {
+    /// <summary>
+    /// StringUtitlity.Convert 関数を呼び出す際に、どのタイプの変換を行うかを示す。
+    /// </summary>
     [Flags]
     public enum ConvertTargets
     {

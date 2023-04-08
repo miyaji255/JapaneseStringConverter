@@ -13,7 +13,7 @@ jobs:
           dotnet-version: 6.0.x
       - name: Install dependencies
         run: dotnet restore JapaneseStringConverter.sln
-      - name: Build ConsoleApp
+      - name: Build
         run: dotnet build JapaneseStringConverter.sln --configuration Release --no-restore
       - name: Test 
         run: dotnet test JapaneseStringConverter.sln --no-restore

@@ -1,14 +1,16 @@
-﻿#pragma warning disable IDE0057
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 using JapaneseStringConverter.Internal;
 
-#if !NET472
+#if !NETFRAMEWORK
 using System.Diagnostics.CodeAnalysis;
 #endif
 
 namespace JapaneseStringConverter
 {
+    /// <summary>
+    /// 文字列を変換する拡張メソッドを提供します
+    /// </summary>
     public static class StringExtensions
     {
         /// <summary>
@@ -24,7 +26,7 @@ namespace JapaneseStringConverter
         /// 全角文字を半角文字に変換します
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#if !NET472
+#if !NETFRAMEWORK
         [return: NotNullIfNotNull("source")]
 #endif
         public static string? ToNarrow(this string? source)
@@ -62,7 +64,7 @@ namespace JapaneseStringConverter
         /// 半角文字を全角文字に変換します
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#if !NET472
+#if !NETFRAMEWORK
         [return: NotNullIfNotNull("source")]
 #endif
         public static string? ToWide(this string? source)
@@ -111,7 +113,7 @@ namespace JapaneseStringConverter
         /// 全角カタカナをひらがなに変換します
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#if !NET472
+#if !NETFRAMEWORK
         [return: NotNullIfNotNull("source")]
 #endif
         public static string? ToHiragana(this string? source)
@@ -149,7 +151,7 @@ namespace JapaneseStringConverter
         /// ひらがなを全角カタカナに上書きします
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#if !NET472
+#if !NETFRAMEWORK
         [return: NotNullIfNotNull("source")]
 #endif
         public static string? ToKatakana(this string? source)
