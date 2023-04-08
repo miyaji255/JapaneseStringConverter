@@ -1,4 +1,7 @@
-﻿/*
+﻿#pragma warning disable IDE0066
+#pragma warning disable CS8603 
+//http://wiki.dobon.net/index.php?free%2FkanaxsCSharp
+/*
  * kanaxs C# 拡張版 1.0.2
  * Copyright (c) 2011, DOBON! <http://dobon.net>
  * All rights reserved.

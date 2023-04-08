@@ -56,10 +56,10 @@ namespace JapaneseStringConverter.Internal
                             destination[length++] = target;
                             continue;
                         case '「': // U+300C
-                            destination[length++] = '「';
+                            destination[length++] = '｢';
                             continue;
                         case '」': // U+300D
-                            destination[length++] = '｢';
+                            destination[length++] = '｣';
                             continue;
                         case < CombiningDakuten: // U+300E ~ U+3098
                             destination[length++] = target;
