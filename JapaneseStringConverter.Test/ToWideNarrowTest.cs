@@ -1,4 +1,6 @@
-﻿namespace JapaneseStringConverter.Test
+﻿using JapaneseStringConverter.Internal;
+
+namespace JapaneseStringConverter.Test
 {
     public class ToWideNarrowTest
     {
@@ -9,6 +11,17 @@
         {
             var result = input.ToWide();
 
+            Assert.Equal(expected, result);
+
+            var temp = new char[input.Length * 2];
+            var length = UnicodeStringConverter.ToWide(input.AsSpan(), temp);
+
+            Assert.Equal(expected, temp.AsSpan(0, length).ToString());
+
+            temp = new char[input.Length * 2];
+            length = UnicodeStringConverter.ToWideFromEnd(input.AsSpan(), temp);
+
+            result = temp.AsSpan(length , temp.Length - length).ToString();
             Assert.Equal(expected, result);
         }
 
@@ -43,6 +56,17 @@
         {
             var result = input.ToNarrow();
 
+            Assert.Equal(expected, result);
+
+            var temp = new char[input.Length * 2];
+            var length = UnicodeStringConverter.ToNarrow(input.AsSpan(), temp);
+
+            Assert.Equal(expected, temp.AsSpan(0, length).ToString());
+
+            temp = new char[input.Length * 2];
+            length = UnicodeStringConverter.ToNarrowFromEnd(input.AsSpan(), temp);
+
+            result = temp.AsSpan(length, temp.Length - length).ToString();
             Assert.Equal(expected, result);
         }
 

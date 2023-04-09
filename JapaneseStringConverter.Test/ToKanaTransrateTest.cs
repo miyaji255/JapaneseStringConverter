@@ -1,4 +1,6 @@
-﻿namespace JapaneseStringConverter.Test
+﻿using JapaneseStringConverter.Internal;
+
+namespace JapaneseStringConverter.Test
 {
     public class ToKanaTransrateTest
     {
@@ -40,6 +42,17 @@
         {
             var result = input.ToKatakana();
 
+            Assert.Equal(expected, result);
+
+            var temp = new char[input.Length * 2];
+            var length = UnicodeStringConverter.ToKatakana(input.AsSpan(), temp);
+
+            Assert.Equal(expected, temp.AsSpan(0, length).ToString());
+
+            temp = new char[input.Length * 2];
+            length = UnicodeStringConverter.ToKatakanaFromEnd(input.AsSpan(), temp);
+
+            result = temp.AsSpan(length, temp.Length - length).ToString();
             Assert.Equal(expected, result);
         }
 
