@@ -1,6 +1,4 @@
-﻿using JapaneseStringConverter.Internal;
-
-namespace JapaneseStringConverter.Test
+﻿namespace JapaneseStringConverter.Test
 {
     public class ToWideNarrowTest
     {
@@ -11,17 +9,6 @@ namespace JapaneseStringConverter.Test
         {
             var result = input.ToWide();
 
-            Assert.Equal(expected, result);
-
-            var temp = new char[input.Length * 2];
-            var length = UnicodeStringConverter.ToWide(input.AsSpan(), temp);
-
-            Assert.Equal(expected, temp.AsSpan(0, length).ToString());
-
-            temp = new char[input.Length * 2];
-            length = UnicodeStringConverter.ToWideFromEnd(input.AsSpan(), temp);
-
-            result = temp.AsSpan(length , temp.Length - length).ToString();
             Assert.Equal(expected, result);
         }
 
@@ -56,17 +43,6 @@ namespace JapaneseStringConverter.Test
         {
             var result = input.ToNarrow();
 
-            Assert.Equal(expected, result);
-
-            var temp = new char[input.Length * 2];
-            var length = UnicodeStringConverter.ToNarrow(input.AsSpan(), temp);
-
-            Assert.Equal(expected, temp.AsSpan(0, length).ToString());
-
-            temp = new char[input.Length * 2];
-            length = UnicodeStringConverter.ToNarrowFromEnd(input.AsSpan(), temp);
-
-            result = temp.AsSpan(length, temp.Length - length).ToString();
             Assert.Equal(expected, result);
         }
 
@@ -116,68 +92,10 @@ namespace JapaneseStringConverter.Test
             Assert.Equal(input, result);
         }
 
-        public static readonly string[][] WideNarrowSource = new string[][] {
-            new[] { "ｱｲｳ", "アイウ" },
-            new[] { "abcDEF", "ａｂｃＤＥＦ" },
-            new[] { "ｶﾞｷﾞｸﾞ", "ガギグ" },
-            new[] { "ﾊﾟﾋﾟﾌﾟ", "パピプ" },
-            new[] { "ヰヸヱヹ", "ヰヸヱヹ" },
-            new[] { "ｺｺﾞｻｻﾞｼｼﾞｽｽﾞｾｾﾞｿｿﾞ", "コゴサザシジスズセゼソゾ" },
-            new[] { " ", "　" },
-            new[]
-            {
-                " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
-                "　！＂＃＄％＆＇（）＊＋，－．／０１２３４５６７８９：；＜＝＞？＠ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ［￥］＾＿｀ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ｛｜｝～"
-            },
-            new[]
-            {
-                "ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをん",
-                "ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをん"
-            },
-            new[]
-            {
-                "ｧｱｨｲｩｳｪｴｫｵｶｶﾞｷｷﾞｸｸﾞｹｹﾞｺｺﾞｻｻﾞｼｼﾞｽｽﾞｾｾﾞｿｿﾞﾀﾀﾞﾁﾁﾞｯﾂﾂﾞﾃﾃﾞﾄﾄﾞﾅﾆﾇﾈﾉﾊﾊﾞﾊﾟﾋﾋﾞﾋﾟﾌﾌﾞﾌﾟﾍﾍﾞﾍﾟﾎﾎﾞﾎﾟﾏﾐﾑﾒﾓｬﾔｭﾕｮﾖﾗﾗﾟﾘﾘﾟﾙﾙﾟﾚﾚﾟﾛﾛﾟヮﾜﾜﾞヰヸヱヹｦｦﾞﾝｳﾞヵヶヽヾ",
-                "ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨララ゚リリ゚ルル゚レレ゚ロロ゚ヮワヷヰヸヱヹヲヺンヴヵヶヽヾ",
-            },
-            new[]
-            {
-                 "¢£\\¦¬¯₩｡｢｣､･￩￪￫￬￭￮ｰ",
-                 "￠￡￥￤￢￣￦。「」、・←↑→↓■○ー",
+        public static readonly string[][] WideNarrowSource = TestSources.WideNarrowTranslate;
 
-            }
-        };
+        public static readonly string[][] WideSource = TestSources.Wide;
 
-        public static readonly string[][] WideSource = new string[][]
-        {
-            new[]
-            {
-                "ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨララ゚リリ゚ルル゚レレ゚ロロ゚ヮワヷヰヸヱヹヲヺンヴヵヶヽヾ",
-                "ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨララ゚リリ゚ルル゚レレ゚ロロ゚ヮワヷヰヸヱヹヲヺンヴヵヶヽヾ"
-            },
-            new[]
-            {
-                "　！＂＃＄％＆＇（）＊＋，－．／０１２３４５６７８９：；＜＝＞？＠ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ［＼￥］＾＿｀ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ｛｜｝～",
-                "　！＂＃＄％＆＇（）＊＋，－．／０１２３４５６７８９：；＜＝＞？＠ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ［＼￥］＾＿｀ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ｛｜｝～"
-            },
-            new[]
-            {
-                "¥",
-                "￥"
-            },
-        };
-
-        public static readonly string[][] NarrowSource = new string[][]
-        {
-            new[]
-            {
-                "ｧｱｨｲｩｳｪｴｫｵｶｶﾞｷｷﾞｸｸﾞｹｹﾞｺｺﾞｻｻﾞｼｼﾞｽｽﾞｾｾﾞｿｿﾞﾀﾀﾞﾁﾁﾞｯﾂﾂﾞﾃﾃﾞﾄﾄﾞﾅﾆﾇﾈﾉﾊﾊﾞﾊﾟﾋﾋﾞﾋﾟﾌﾌﾞﾌﾟﾍﾍﾞﾍﾟﾎﾎﾞﾎﾟﾏﾐﾑﾒﾓｬﾔｭﾕｮﾖﾗﾗﾟﾘﾘﾟﾙﾙﾟﾚﾚﾟﾛﾛﾟヮﾜﾜﾞヰヸヱヹｦｦﾞﾝｳﾞヵヶヽヾ",
-                "ｧｱｨｲｩｳｪｴｫｵｶｶﾞｷｷﾞｸｸﾞｹｹﾞｺｺﾞｻｻﾞｼｼﾞｽｽﾞｾｾﾞｿｿﾞﾀﾀﾞﾁﾁﾞｯﾂﾂﾞﾃﾃﾞﾄﾄﾞﾅﾆﾇﾈﾉﾊﾊﾞﾊﾟﾋﾋﾞﾋﾟﾌﾌﾞﾌﾟﾍﾍﾞﾍﾟﾎﾎﾞﾎﾟﾏﾐﾑﾒﾓｬﾔｭﾕｮﾖﾗﾗﾟﾘﾘﾟﾙﾙﾟﾚﾚﾟﾛﾛﾟヮﾜﾜﾞヰヸヱヹｦｦﾞﾝｳﾞヵヶヽヾ"
-            },
-            new[]
-            {
-                " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
-                " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
-            },
-        };
+        public static readonly string[][] NarrowSource = TestSources.Narrow;
     }
 }

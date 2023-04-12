@@ -98,7 +98,7 @@ namespace ConsoleApp
         public void JapaneseStringConverterKatakanaFromEnd()
         {
             var temp = (stackalloc char[_hiragana.Length]);
-            var startIndex = UnicodeStringConverter.ToKatakanaFromEnd(_hiragana, temp);
+            var startIndex = Utf16StringConverter.ToKatakanaFromEnd(_hiragana, temp);
             temp[startIndex..].ToString();
         }
 

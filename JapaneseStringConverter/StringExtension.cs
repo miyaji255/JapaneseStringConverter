@@ -39,7 +39,7 @@ namespace JapaneseStringConverter
                 ? stackalloc char[sourceSpan.Length * 2]
                 : new char[sourceSpan.Length * 2];
 
-            var length = UnicodeStringConverter.ToNarrow(source.AsSpan(), result);
+            var length = Utf16StringConverter.ToNarrow(source.AsSpan(), result);
 
             return result.Slice(0, length).ToString();
         }
@@ -55,7 +55,7 @@ namespace JapaneseStringConverter
             if (source.Overlaps(destination))
                 ThrowHelper.ThrowInvalidOperationException("This operation is invalid on overlapping buffers.");
 
-            return UnicodeStringConverter.ToNarrow(source, destination);
+            return Utf16StringConverter.ToNarrow(source, destination);
         }
         #endregion
 
@@ -78,7 +78,7 @@ namespace JapaneseStringConverter
                 ? stackalloc char[sourceSpan.Length]
                 : new char[sourceSpan.Length];
 
-            var length = UnicodeStringConverter.ToWide(source.AsSpan(), result);
+            var length = Utf16StringConverter.ToWide(source.AsSpan(), result);
 
             return result.Slice(0, length).ToString();
         }
@@ -94,7 +94,7 @@ namespace JapaneseStringConverter
             if (source.Overlaps(destination))
                 ThrowHelper.ThrowInvalidOperationException("This operation is invalid on overlapping buffers.");
 
-            return UnicodeStringConverter.ToWide(source, destination);
+            return Utf16StringConverter.ToWide(source, destination);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace JapaneseStringConverter
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int ToWideOverride(Span<char> source)
         {
-            return UnicodeStringConverter.ToWide(source, source);
+            return Utf16StringConverter.ToWide(source, source);
         }
         #endregion
 
@@ -127,7 +127,7 @@ namespace JapaneseStringConverter
                 ? stackalloc char[sourceSpan.Length]
                 : new char[sourceSpan.Length];
 
-            var length = UnicodeStringConverter.ToHiragana(source.AsSpan(), ref result, false);
+            var length = Utf16StringConverter.ToHiragana(source.AsSpan(), ref result, false);
 
             return result.Slice(0, length).ToString();
         }
@@ -142,7 +142,7 @@ namespace JapaneseStringConverter
             if (source.Overlaps(destination))
                 ThrowHelper.ThrowInvalidOperationException("This operation is invalid on overlapping buffers.");
 
-            return UnicodeStringConverter.ToHiragana(source, ref destination, true);
+            return Utf16StringConverter.ToHiragana(source, ref destination, true);
         }
         #endregion
 
@@ -165,7 +165,7 @@ namespace JapaneseStringConverter
                 ? stackalloc char[sourceSpan.Length]
                 : new char[sourceSpan.Length];
 
-            var length = UnicodeStringConverter.ToKatakana(source.AsSpan(), result);
+            var length = Utf16StringConverter.ToKatakana(source.AsSpan(), result);
 
             return result.Slice(0, length).ToString();
         }
@@ -180,7 +180,7 @@ namespace JapaneseStringConverter
             if (source.Overlaps(destination))
                 ThrowHelper.ThrowInvalidOperationException("This operation is invalid on overlapping buffers.");
 
-            return UnicodeStringConverter.ToKatakana(source, destination);
+            return Utf16StringConverter.ToKatakana(source, destination);
         }
         #endregion
     }

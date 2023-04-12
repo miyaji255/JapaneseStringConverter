@@ -1,11 +1,10 @@
-﻿using JapaneseStringConverter.Internal;
-
-namespace JapaneseStringConverter.Test
+﻿namespace JapaneseStringConverter.Test
 {
     public class ToKanaTransrateTest
     {
         [Theory]
         [MemberData(nameof(KanaTransrateSource))]
+        [MemberData(nameof(HiraganaSource))]
         public void ToHiragana(string input, string expected)
         {
             var result = input.ToHiragana();
@@ -29,6 +28,7 @@ namespace JapaneseStringConverter.Test
 
         [Theory]
         [MemberData(nameof(KanaTransrateSource))]
+        [MemberData(nameof(HiraganaSource))]
         public void StringUtilHiragana(string input, string expected)
         {
             var result = StringUtility.Convert(input, ConvertTargets.Hiragana);
@@ -38,21 +38,11 @@ namespace JapaneseStringConverter.Test
 
         [Theory]
         [MemberData(nameof(KanaTransrateSource))]
+        [MemberData(nameof(KatakanaSource))]
         public void ToKatakana(string expected, string input)
         {
             var result = input.ToKatakana();
 
-            Assert.Equal(expected, result);
-
-            var temp = new char[input.Length * 2];
-            var length = UnicodeStringConverter.ToKatakana(input.AsSpan(), temp);
-
-            Assert.Equal(expected, temp.AsSpan(0, length).ToString());
-
-            temp = new char[input.Length * 2];
-            length = UnicodeStringConverter.ToKatakanaFromEnd(input.AsSpan(), temp);
-
-            result = temp.AsSpan(length, temp.Length - length).ToString();
             Assert.Equal(expected, result);
         }
 
@@ -72,6 +62,7 @@ namespace JapaneseStringConverter.Test
 
         [Theory]
         [MemberData(nameof(KanaTransrateSource))]
+        [MemberData(nameof(KatakanaSource))]
         public void StringUtilKatakana(string expected, string input)
         {
             var result = StringUtility.Convert(input, ConvertTargets.Katakana);
@@ -79,50 +70,10 @@ namespace JapaneseStringConverter.Test
             Assert.Equal(expected, result);
         }
 
-        public static readonly string[][] KanaTransrateSource = new string[][] {
-            new[] { "アイウエオ", "あいうえお" },
-            new[] { "ガギグゲゴ", "がぎぐげご" },
-            new[] { "ＡＢＣ", "ＡＢＣ" },
-            new[]
-            {
-                " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\r\n",
-                " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\r\n"
-            },
-            new[]
-            {
-                "　！＂＃＄％＆＇（）＊＋，－．／０１２３４５６７８９：；＜＝＞？＠ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ［＼］＾＿｀ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ｛｜｝～",
-                "　！＂＃＄％＆＇（）＊＋，－．／０１２３４５６７８９：；＜＝＞？＠ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ［＼］＾＿｀ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ｛｜｝～",
-           },
-            new[]
-            {
-                "ｧｱｨｲｩｳｪｴｫｵｶｶﾞｷｷﾞｸｸﾞｹｹﾞｺｺﾞｻｻﾞｼｼﾞｽｽﾞｾｾﾞｿｿﾞﾀﾀﾞﾁﾁﾞｯﾂﾂﾞﾃﾃﾞﾄﾄﾞﾅﾆﾇﾈﾉﾊﾊﾞﾊﾟﾋﾋﾞﾋﾟﾌﾌﾞﾌﾟﾍﾍﾞﾍﾟﾎﾎﾞﾎﾟﾏﾐﾑﾒﾓｬﾔｭﾕｮﾖﾗﾗﾟﾘﾘﾟﾙﾙﾟﾚﾚﾟﾛﾛﾟﾜﾜﾞｦｦﾞﾝｳﾞ",
-                "ｧｱｨｲｩｳｪｴｫｵｶｶﾞｷｷﾞｸｸﾞｹｹﾞｺｺﾞｻｻﾞｼｼﾞｽｽﾞｾｾﾞｿｿﾞﾀﾀﾞﾁﾁﾞｯﾂﾂﾞﾃﾃﾞﾄﾄﾞﾅﾆﾇﾈﾉﾊﾊﾞﾊﾟﾋﾋﾞﾋﾟﾌﾌﾞﾌﾟﾍﾍﾞﾍﾟﾎﾎﾞﾎﾟﾏﾐﾑﾒﾓｬﾔｭﾕｮﾖﾗﾗﾟﾘﾘﾟﾙﾙﾟﾚﾚﾟﾛﾛﾟﾜﾜﾞｦｦﾞﾝｳﾞ"
-            },
-            new[]
-            {
-                "ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨララ゚リリ゚ルル゚レレ゚ロロ゚ヮワヷヰヸヱヹヲヺンヴヵヶヽヾ" ,
-                "ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらら゚りり゚るる゚れれ゚ろろ゚ゎわわ゙ゐゐ゙ゑゑ゙をを゙んゔゕゖゝゞ"
-            },
-            new[] { "ラ゚ラ゚ラ゚ラ゚", "ら゚ら゚ら゚ら゚" },
-            new[] { "ヷヸヹヺ", "わ゙ゐ゙ゑ゙を゙" }
-        };
+        public static readonly string[][] KanaTransrateSource = TestSources.KanaTransrate;
 
-        public static readonly string[][] HiraganaSource = new string[][]
-        {
-            new[]
-            {
-                "ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらら゚りり゚るる゚れれ゚ろろ゚ゎわわ゙ゐゐ゙ゑゑ゙をを゙んゔゕゖゝゞ",
-                "ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらら゚りり゚るる゚れれ゚ろろ゚ゎわわ゙ゐゐ゙ゑゑ゙をを゙んゔゕゖゝゞ"
-            },
-        };
+        public static readonly string[][] HiraganaSource = TestSources.Hiragana;
 
-        public static readonly string[][] KatakanaSource = new string[][]
-        {
-            new[]
-            {
-                "ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨララ゚リリ゚ルル゚レレ゚ロロ゚ヮワヷヰヸヱヹヲヺンヴヵヶヽヾ" ,
-                "ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨララ゚リリ゚ルル゚レレ゚ロロ゚ヮワヷヰヸヱヹヲヺンヴヵヶヽヾ"
-            },
-        };
+        public static readonly string[][] KatakanaSource = TestSources.Katakana;
     }
 }

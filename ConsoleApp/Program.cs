@@ -5,6 +5,10 @@ using JapaneseStringConverter.Internal;
 
 Console.OutputEncoding = Encoding.UTF8;
 
+
+var hiraganaD = Enumerable.Range('ァ', 'ゞ' - 'ぁ' + 1).Aggregate(new StringBuilder(), (builder, c) => builder.Append((char)c).Append('\u3099')).ToString();
+Console.WriteLine(hiraganaD);
+
 #if DEBUG
 OutputNWUtility();
 OutputHKUtility();
@@ -25,7 +29,7 @@ static void OutputNWUtility()
         var c = (char)i;
         span[0] = c;
         span[1] = '\u0000';
-        var length = UnicodeStringConverter.ToWide(span[0..1], span);
+        var length = Utf16StringConverter.ToWide(span[0..1], span);
         if (span[1] != '\u0000' || span[0] != c)
         {
             if (c is 'a' or 'A' or '0' or 'ｦ' or 'ｧ' or 'ｱ' or 'ｶ' or 'ｻ' or 'ﾀ' or 'ﾅ' or 'ﾊ' or 'ﾏ' or 'ﾔ' or 'ﾗ' or 'ﾜ' or '￩')
@@ -45,7 +49,7 @@ static void OutputNWUtility()
 
         span[0] = '\u0000';
         span[1] = c;
-        length = UnicodeStringConverter.ToNarrow(span[1..2], span);
+        length = Utf16StringConverter.ToNarrow(span[1..2], span);
         if (span[0] != c)
         {
             if (c is 'ァ' or 'カ' or 'サ' or 'タ' or 'ナ' or 'ハ' or 'マ' or 'ャ' or 'ラ' or 'ワ' or '！' or '０' or 'Ａ' or 'ａ')
@@ -120,7 +124,7 @@ static void OutputHKUtility()
         var c = (char)i;
         span[0] = c;
         span[1] = '\u0000';
-        var length = UnicodeStringConverter.ToKatakana(span[0..1], span);
+        var length = Utf16StringConverter.ToKatakana(span[0..1], span);
         if (span[1] != '\u0000' || span[0] != c)
         {
             if (c is 'か' or 'さ' or 'た' or 'な' or 'は' or 'ま' or 'ゃ' or 'ら' or 'ゎ' or 'ゔ')
@@ -136,7 +140,7 @@ static void OutputHKUtility()
 
         span[0] = '\u0000';
         span[1] = c;
-        length = UnicodeStringConverter.ToHiragana(span[1..2], ref span, true);
+        length = Utf16StringConverter.ToHiragana(span[1..2], ref span, true);
         if (span[0] != c)
         {
             if (c is 'カ' or 'サ' or 'タ' or 'ナ' or 'ハ' or 'マ' or 'ャ' or 'ラ' or 'ワ' or 'ヵ')

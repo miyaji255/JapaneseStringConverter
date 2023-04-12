@@ -69,8 +69,8 @@ namespace JapaneseStringConverter
                 if (targets.HasFlag(ConvertTargets.Katakana))
                 {
                     // 半角化よりカタカナ化のほうが優先
-                    var length = UnicodeStringConverter.ToKatakana(span.Slice(sourceLength, sourceLength), span.Slice(sourceLength, sourceLength));
-                    length = UnicodeStringConverter.ToNarrow(span.Slice(sourceLength, length), span);
+                    var length = Utf16StringConverter.ToKatakana(span.Slice(sourceLength, sourceLength), span.Slice(sourceLength, sourceLength));
+                    length = Utf16StringConverter.ToNarrow(span.Slice(sourceLength, length), span);
 
                     return span.Slice(0, length).ToString();
                 }
@@ -78,14 +78,14 @@ namespace JapaneseStringConverter
                 {
                     // 半角化よりひらがな化のほうが優先
                     // spanは最初から2倍分だから ensured=true
-                    var length = UnicodeStringConverter.ToHiragana(span.Slice(0, sourceLength), ref span, true);
+                    var length = Utf16StringConverter.ToHiragana(span.Slice(0, sourceLength), ref span, true);
                     // カタカナはすべてひらがなに変換したはずなので長さが2倍になるものはないはず
-                    length = UnicodeStringConverter.ToNarrow(span.Slice(0, length), span);
+                    length = Utf16StringConverter.ToNarrow(span.Slice(0, length), span);
                     return span.Slice(0, length).ToString();
                 }
                 else
                 {
-                    var length = UnicodeStringConverter.ToNarrow(span.Slice(sourceLength, sourceLength), span);
+                    var length = Utf16StringConverter.ToNarrow(span.Slice(sourceLength, sourceLength), span);
                     return span.Slice(0, length).ToString();
                 }
             }
@@ -112,10 +112,10 @@ namespace JapaneseStringConverter
                 if (targets.HasFlag(ConvertTargets.Katakana))
                 {
                     // 全角化よりカタカナ化のほうが優先
-                    var length = UnicodeStringConverter.ToKatakana(span, span);
+                    var length = Utf16StringConverter.ToKatakana(span, span);
                     if (targets.HasFlag(ConvertTargets.Wide))
                     {
-                        length = UnicodeStringConverter.ToWide(span.Slice(0, length), span);
+                        length = Utf16StringConverter.ToWide(span.Slice(0, length), span);
                     }
 
                     return span.Slice(0, length).ToString();
@@ -125,19 +125,19 @@ namespace JapaneseStringConverter
                     if (targets.HasFlag(ConvertTargets.Wide))
                     {
                         // ｱ => ア => あ のようなパターンに対応するため先に全角化
-                        var length = UnicodeStringConverter.ToWide(span, span);
-                        length = UnicodeStringConverter.ToHiragana(span.Slice(0, length), ref span, false);
+                        var length = Utf16StringConverter.ToWide(span, span);
+                        length = Utf16StringConverter.ToHiragana(span.Slice(0, length), ref span, false);
                         return span.Slice(0, length).ToString();
                     }
                     else
                     {
-                        var length = UnicodeStringConverter.ToHiragana(span, ref span, false);
+                        var length = Utf16StringConverter.ToHiragana(span, ref span, false);
                         return span.Slice(0, length).ToString();
                     }
                 }
                 else if (targets.HasFlag(ConvertTargets.Wide))
                 {
-                    var length = UnicodeStringConverter.ToWide(span, span);
+                    var length = Utf16StringConverter.ToWide(span, span);
                     return span.Slice(0, length).ToString();
                 }
                 else
