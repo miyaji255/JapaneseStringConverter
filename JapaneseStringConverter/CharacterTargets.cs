@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-#if !NETFRAMEWORK
+#if NETCOREAPP1_0_OR_GREATER
 using System;
 using System.Collections.Immutable;
 #endif
@@ -12,7 +12,7 @@ namespace JapaneseStringConverter
     /// </summary>
     public static class CharacterTargets
     {
-#if !NETFRAMEWORK
+#if NETCOREAPP1_0_OR_GREATER
         /// <summary>
         /// 全角化できる半角文字を返します
         /// </summary>
@@ -22,7 +22,7 @@ namespace JapaneseStringConverter
         /// <summary>
         /// 全角化できる半角文字を返します
         /// </summary>
-#if !NETFRAMEWORK
+#if NETCOREAPP1_0_OR_GREATER
         [Obsolete($"{nameof(CharacterTargets)}.{nameof(Narrow)} を使用してください")]
 #endif
         public static readonly ReadOnlyCollection<char> ReadOnlyNarrow = new(_narrow!);
@@ -51,7 +51,7 @@ namespace JapaneseStringConverter
             '￩', '￪', '￫', '￬', '￭', '￮',
         };
 
-#if !NETFRAMEWORK
+#if NETCOREAPP1_0_OR_GREATER
         /// <summary>
         /// 全角化できる半角文字を返します
         /// </summary>
@@ -61,7 +61,7 @@ namespace JapaneseStringConverter
         /// <summary>
         /// 半角化できる全角文字を返します
         /// </summary>
-#if !NETFRAMEWORK
+#if NETCOREAPP1_0_OR_GREATER
         [Obsolete($"{nameof(CharacterTargets)}.{nameof(Wide)} を使用してください")]
 #endif
         public static readonly ReadOnlyCollection<char> ReadOnlyWide = new(_wide!);
@@ -90,7 +90,7 @@ namespace JapaneseStringConverter
             '｛', '｜', '｝', '～', '￠', '￡', '￢', '￣', '￤', '￥', '￦',
         };
 
-#if !NETFRAMEWORK
+#if NETCOREAPP1_0_OR_GREATER
         /// <summary>
         /// カタカナ化できるひらがなを返します
         /// </summary>
@@ -100,7 +100,7 @@ namespace JapaneseStringConverter
         /// <summary>
         /// カタカナ化できるひらがなを返します
         /// </summary>
-#if !NETFRAMEWORK
+#if NETCOREAPP1_0_OR_GREATER
         [Obsolete($"{nameof(CharacterTargets)}.{nameof(Hiragana)} を使用してください")]
 #endif
         public static readonly ReadOnlyCollection<char> ReadOnlyHiragana = new(_hiragana!);
@@ -120,7 +120,7 @@ namespace JapaneseStringConverter
             'ゔ', 'ゕ', 'ゖ', 'ゝ', 'ゞ',
         };
 
-#if !NETFRAMEWORK
+#if NETCOREAPP1_0_OR_GREATER
         /// <summary>
         /// カタカナ化できるひらがなを返します
         /// </summary>
@@ -130,7 +130,7 @@ namespace JapaneseStringConverter
         /// <summary>
         /// ひらがな化できるカタカナを返します
         /// </summary>
-#if !NETFRAMEWORK
+#if NETCOREAPP1_0_OR_GREATER
         [Obsolete($"{nameof(CharacterTargets)}.{nameof(Katakana)} を使用してください")]
 #endif
         public static readonly ReadOnlyCollection<char> ReadOnlyKatakana = new(_katakana!);

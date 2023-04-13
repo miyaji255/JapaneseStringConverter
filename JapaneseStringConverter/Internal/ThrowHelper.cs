@@ -1,6 +1,6 @@
 ﻿using System;
 
-#if !NETFRAMEWORK
+#if NETCOREAPP1_0_OR_GREATER
 using System.Diagnostics.CodeAnalysis;
 #endif
 
@@ -8,7 +8,7 @@ namespace JapaneseStringConverter.Internal
 {
     internal static class ThrowHelper
     {
-#if !NETFRAMEWORK
+#if NETCOREAPP1_0_OR_GREATER
         [DoesNotReturn]
 #endif
         internal static void ThrowInvalidOperationException(string? message) {

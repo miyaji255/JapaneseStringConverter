@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using JapaneseStringConverter.Internal;
 
-#if !NETFRAMEWORK
+#if NETCOREAPP1_0_OR_GREATER
 using System.Diagnostics.CodeAnalysis;
 #endif
 
@@ -26,7 +26,7 @@ namespace JapaneseStringConverter
         /// 全角文字を半角文字に変換します
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#if !NETFRAMEWORK
+#if NETCOREAPP1_0_OR_GREATER
         [return: NotNullIfNotNull("source")]
 #endif
         public static string? ToNarrow(this string? source)
@@ -64,7 +64,7 @@ namespace JapaneseStringConverter
         /// 半角文字を全角文字に変換します
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#if !NETFRAMEWORK
+#if NETCOREAPP1_0_OR_GREATER
         [return: NotNullIfNotNull("source")]
 #endif
         public static string? ToWide(this string? source)
@@ -113,7 +113,7 @@ namespace JapaneseStringConverter
         /// 全角カタカナをひらがなに変換します
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#if !NETFRAMEWORK
+#if NETCOREAPP1_0_OR_GREATER
         [return: NotNullIfNotNull("source")]
 #endif
         public static string? ToHiragana(this string? source)
@@ -151,7 +151,7 @@ namespace JapaneseStringConverter
         /// ひらがなを全角カタカナに上書きします
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#if !NETFRAMEWORK
+#if NETCOREAPP1_0_OR_GREATER
         [return: NotNullIfNotNull("source")]
 #endif
         public static string? ToKatakana(this string? source)

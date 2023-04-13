@@ -1,7 +1,7 @@
 ﻿using System;
 using JapaneseStringConverter.Internal;
 
-#if !NETFRAMEWORK
+#if NETCOREAPP1_0_OR_GREATER
 using System.Diagnostics.CodeAnalysis;
 #endif
 
@@ -29,7 +29,7 @@ namespace JapaneseStringConverter
         /// ConvertTargets でしたものに文字列を変換します
         /// </summary>
         /// <exception cref="ArgumentException"></exception>
-#if !NETFRAMEWORK
+#if NETCOREAPP1_0_OR_GREATER
         [return: NotNullIfNotNull("source")]
 #endif
         public static string? Convert(string? source, ConvertTargets targets)
