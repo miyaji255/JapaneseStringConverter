@@ -1291,104 +1291,21 @@ namespace JapaneseStringConverter.Internal
                         case CombiningDakuten:
                             if (length == 0)
                             {
-                                destination[length++] = target;
+                                destination[length++] = CombiningDakuten;
                                 continue;
                             }
                             else
                             {
                                 switch (destination[length - 1])
                                 {
-                                    case < 'ウ':
-                                        destination[length++] = target;
-                                        continue;
-                                    case 'ウ':
-                                        destination[length - 1] = 'ヴ';
-                                        continue;
-                                    case < 'カ':
-                                        destination[length++] = target;
-                                        continue;
-                                    case < 'ッ':
-                                        if ((destination[length - 1] & 1) == 1)
-                                        {
-                                            destination[length - 1] += (char)1;
-                                            continue;
-                                        }
-                                        else
-                                        {
-                                            destination[length++] = target;
-                                            continue;
-                                        }
-                                    case 'ッ':
-                                        destination[length++] = target;
-                                        continue;
-                                    case < 'ド':
-                                        if ((destination[length - 1] & 1) == 0)
-                                        {
-                                            destination[length - 1] += (char)1;
-                                            continue;
-                                        }
-                                        else
-                                        {
-                                            destination[length++] = target;
-                                            continue;
-                                        }
-                                    case < 'ハ':
-                                        destination[length++] = target;
-                                        continue;
-                                    case < 'ボ':
-                                        if (destination[length - 1] % 3 == 0)
-                                        {
-                                            destination[length - 1] += (char)1;
-                                            continue;
-                                        }
-                                        else
-                                        {
-                                            destination[length++] = target;
-                                            continue;
-                                        }
                                     case < 'ワ':
-                                        destination[length++] = target;
+                                        destination[length++] = CombiningDakuten;
                                         continue;
                                     case <= 'ヲ':
                                         destination[length - 1] += (char)('ヷ' - 'ワ');
                                         continue;
-                                    case < 'ヽ':
-                                        destination[length++] = target;
-                                        continue;
-                                    case 'ヽ':
-                                        destination[length - 1] = 'ヾ';
-                                        continue;
                                     default:
-                                        destination[length++] = target;
-                                        continue;
-                                }
-                            }
-                        case CombiningHandakuten:
-                            if (length == 0)
-                            {
-                                destination[length++] = target;
-                                continue;
-                            }
-                            else
-                            {
-                                switch (destination[length - 1])
-                                {
-                                    case < 'ハ':
-                                        destination[length++] = target;
-                                        continue;
-                                    case < 'ボ':
-                                        if (destination[length - 1] % 3 == 0)
-                                        {
-                                            destination[length - 1] += (char)2;
-                                            continue;
-                                        }
-                                        else
-                                        {
-                                            destination[length++] = target;
-                                            continue;
-                                        }
-                                    default:
-                                        destination[length++] = target;
+                                        destination[length++] = CombiningDakuten;
                                         continue;
                                 }
                             }
@@ -1438,7 +1355,7 @@ namespace JapaneseStringConverter.Internal
                         destinationPtr[--startIndex] = target;
                         continue;
                     }
-                    else if (target <= 'ゖ' || target > CombiningHandakuten)
+                    else if (target <= 'ゖ' || target > '\u309C')
                     {   // U+3097, U+3098 は未割り当て
                         destinationPtr[--startIndex] = (char)(target + diff);
                         continue;
@@ -1457,71 +1374,16 @@ namespace JapaneseStringConverter.Internal
                             case < 'ぁ':
                                 destinationPtr[--startIndex] = target;
                                 continue;
-                            case < 'う':
-                                destinationPtr[--startIndex] = CombiningDakuten;
-                                destinationPtr[--startIndex] = (char)(target + diff);
-                                continue;
-                            case 'う':
-                                destinationPtr[--startIndex] = 'ヴ';
-                                continue;
-                            case < 'か':
-                                destinationPtr[--startIndex] = CombiningDakuten;
-                                destinationPtr[--startIndex] = (char)(target + diff);
-                                continue;
-                            case < 'っ':
-                                if ((target & 1) == 0)
-                                {
-                                    destinationPtr[--startIndex] = CombiningDakuten;
-                                    destinationPtr[--startIndex] = (char)(target + diff);
-                                    continue;
-                                }
-                                else
-                                {
-                                    destinationPtr[--startIndex] = (char)(target + 'ガ' - 'か');
-                                    continue;
-                                }
-                            case 'っ':
-                                destinationPtr[--startIndex] = CombiningDakuten;
-                                destinationPtr[--startIndex] = 'ッ';
-                                continue;
-                            case < 'ど':
-                                if ((target & 1) == 0)
-                                {
-                                    destinationPtr[--startIndex] = (char)(target + 'ヅ' - 'つ');
-                                    continue;
-                                }
-                                else
-                                {
-                                    destinationPtr[--startIndex] = CombiningDakuten;
-                                    destinationPtr[--startIndex] = (char)(target + diff);
-                                    continue;
-                                }
-                            case < 'は':
-                                destinationPtr[--startIndex] = CombiningDakuten;
-                                destinationPtr[--startIndex] = (char)(target + diff);
-                                continue;
-                            case <= 'ほ':
-                                if ((target % 3) == 0)
-                                {
-                                    destinationPtr[--startIndex] = (char)(target + 'バ' - 'は');
-                                    continue;
-                                }
-                                else
-                                {
-                                    destinationPtr[--startIndex] = CombiningDakuten;
-                                    destinationPtr[--startIndex] = (char)(target + diff);
-                                    continue;
-                                }
                             case < 'わ':
                                 destinationPtr[--startIndex] = CombiningDakuten;
-                                destinationPtr[--startIndex] = (char)(target + diff);
+                                destinationPtr[--startIndex] = (char)(diff + target);
                                 continue;
                             case <= 'を':
-                                destinationPtr[--startIndex] = (char)(target + 'ヷ' - 'わ');
+                                destinationPtr[--startIndex] = (char)('ヷ' - 'わ' + target);
                                 continue;
                             case <= 'ゖ':
                                 destinationPtr[--startIndex] = CombiningDakuten;
-                                destinationPtr[--startIndex] = (char)(target + diff);
+                                destinationPtr[--startIndex] = (char)(diff + target);
                                 continue;
                             case < CombiningDakuten:
                                 destinationPtr[--startIndex] = CombiningDakuten;
@@ -1535,79 +1397,20 @@ namespace JapaneseStringConverter.Internal
                                 destinationPtr[--startIndex] = CombiningDakuten;
                                 destinationPtr[--startIndex] = target;
                                 continue;
-                            case 'ゝ':
-                                destinationPtr[--startIndex] = 'ヾ';
-                                continue;
-                            case 'ゞ':
+                            case <= 'ゞ':
                                 destinationPtr[--startIndex] = CombiningDakuten;
-                                destinationPtr[--startIndex] = 'ヾ';
+                                destinationPtr[--startIndex] = (char)(diff + target);
                                 continue;
-                            case > 'ゞ':
+                            default:
                                 destinationPtr[--startIndex] = CombiningDakuten;
                                 destinationPtr[--startIndex] = target;
                                 continue;
                         }
                     }
-                    else // CombiningHandakuten
+                    else
                     {
-                        if (i == 0)
-                        {
-                            destinationPtr[--startIndex] = CombiningHandakuten;
-                            return startIndex;
-                        }
-
-                        target = sourcePtr[--i];
-                        switch (target)
-                        {
-                            case < 'ぁ':
-                                destinationPtr[--startIndex] = CombiningHandakuten;
-                                destinationPtr[--startIndex] = target;
-                                continue;
-                            case < 'は':
-                                destinationPtr[--startIndex] = CombiningHandakuten;
-                                destinationPtr[--startIndex] = (char)(target + diff);
-                                continue;
-                            case <= 'ほ':
-                                if (target % 3 == 0)
-                                {
-                                    destinationPtr[--startIndex] = (char)(target + 'パ' - 'は');
-                                    continue;
-                                }
-                                else
-                                {
-                                    destinationPtr[--startIndex] = CombiningHandakuten;
-                                    destinationPtr[--startIndex] = (char)(target + diff);
-                                    continue;
-                                }
-                            case <= 'ゖ':
-                                destinationPtr[--startIndex] = CombiningHandakuten;
-                                destinationPtr[--startIndex] = (char)(target + diff);
-                                continue;
-                            case < CombiningHandakuten:
-                                destinationPtr[--startIndex] = CombiningHandakuten;
-                                destinationPtr[--startIndex] = target;
-                                continue;
-                            case CombiningHandakuten:
-                                destinationPtr[--startIndex] = CombiningHandakuten;
-                                i++;
-                                continue;
-                            case < 'ゝ':
-                                destinationPtr[--startIndex] = CombiningHandakuten;
-                                destinationPtr[--startIndex] = target;
-                                continue;
-                            case 'ゝ':
-                                destinationPtr[--startIndex] = CombiningHandakuten;
-                                destinationPtr[--startIndex] = 'ヽ';
-                                continue;
-                            case 'ゞ':
-                                destinationPtr[--startIndex] = CombiningHandakuten;
-                                destinationPtr[--startIndex] = 'ヾ';
-                                continue;
-                            case > 'ゞ':
-                                destinationPtr[--startIndex] = CombiningHandakuten;
-                                destinationPtr[--startIndex] = target;
-                                continue;
-                        }
+                        destinationPtr[--startIndex] = target;
+                        continue;
                     }
                 }
 
