@@ -1,13 +1,10 @@
-﻿using System.Runtime.Serialization;
-using System.Text;
-using CommandLine;
+﻿using System.Text;
+#if DEBUG
 using JapaneseStringConverter.Internal;
+#endif
 
 Console.OutputEncoding = Encoding.UTF8;
 
-
-var hiraganaD = Enumerable.Range('ァ', 'ゞ' - 'ぁ' + 1).Aggregate(new StringBuilder(), (builder, c) => builder.Append((char)c).Append('\u3099')).ToString();
-Console.WriteLine(hiraganaD);
 
 #if DEBUG
 OutputNWUtility();
@@ -16,6 +13,7 @@ OutputHKUtility();
 BenchmarkDotNet.Running.BenchmarkRunner.Run<ConsoleApp.BenchmarkTargets>();
 #endif
 
+#if DEBUG
 static void OutputNWUtility()
 {
     var narrowChars = new StringBuilder(600);
@@ -190,3 +188,4 @@ static void OutputHKUtility()
     }
     Console.WriteLine(builder.ToString());
 }
+#endif

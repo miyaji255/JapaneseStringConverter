@@ -15,15 +15,11 @@ namespace JapaneseStringConverter
         /// <summary>
         /// stack に置く最大のbyte数
         /// </summary>
-        internal const int MaxByteLimit = 1024;
+        internal const int MaxByteCount = 1024;
         /// <summary>
-        /// charは2byteで半角時に文字数が最大で2倍になるため <see cref="MaxByteLimit"/> の1/4
+        /// charは2byteのため <see cref="MaxByteCount"/> の 1/2
         /// </summary>
-        internal const int MaxNarrowCharLimit = MaxByteLimit / 4;
-        /// <summary>
-        /// charは2byteのため <see cref="MaxByteLimit"/> の 1/2
-        /// </summary>
-        internal const int MaxWideCharLimit = MaxByteLimit / 2;
+        internal const int MaxCharCount = MaxByteCount / 2;
 
         /// <summary>
         /// ConvertTargets でしたものに文字列を変換します
@@ -46,9 +42,10 @@ namespace JapaneseStringConverter
             var sourceSpan = source.AsSpan();
             if (targets.HasFlag(ConvertTargets.Narrow))
             {
-                Span<char> span = sourceSpan.Length > MaxNarrowCharLimit
-                    ? stackalloc char[sourceSpan.Length * 2]
-                    : new char[sourceSpan.Length * 2];
+                var requiredLength = sourceSpan.Length * 2;
+                Span<char> span = requiredLength > MaxCharCount
+                    ? stackalloc char[requiredLength]
+                    : new char[requiredLength];
 
                 var sourceLength = sourceSpan.Length;
                 if (targets.HasFlag(ConvertTargets.Uppercase))
@@ -91,7 +88,7 @@ namespace JapaneseStringConverter
             }
             else
             {
-                Span<char> span = sourceSpan.Length > MaxWideCharLimit
+                Span<char> span = sourceSpan.Length > MaxCharCount
                     ? stackalloc char[sourceSpan.Length]
                     : new char[sourceSpan.Length];
 

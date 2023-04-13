@@ -35,13 +35,14 @@ namespace JapaneseStringConverter
                 return null;
             var sourceSpan = source.AsSpan();
 
-            Span<char> result = sourceSpan.Length <= StringUtility.MaxNarrowCharLimit
-                ? stackalloc char[sourceSpan.Length * 2]
-                : new char[sourceSpan.Length * 2];
+            var requiredLength = sourceSpan.Length * 2;
+            Span<char> result = requiredLength <= StringUtility.MaxCharCount
+                ? stackalloc char[requiredLength]
+                : new char[requiredLength];
 
-            var length = Utf16StringConverter.ToNarrow(source.AsSpan(), result);
+            var startIndex = Utf16StringConverter.ToNarrowFromEnd(source.AsSpan(), result);
 
-            return result.Slice(0, length).ToString();
+            return result.Slice(startIndex).ToString();
         }
 
         /// <summary>
@@ -74,13 +75,13 @@ namespace JapaneseStringConverter
 
             var sourceSpan = source.AsSpan();
 
-            Span<char> result = sourceSpan.Length <= StringUtility.MaxWideCharLimit
+            Span<char> result = sourceSpan.Length <= StringUtility.MaxCharCount
                 ? stackalloc char[sourceSpan.Length]
                 : new char[sourceSpan.Length];
 
-            var length = Utf16StringConverter.ToWide(source.AsSpan(), result);
+            var startIndex = Utf16StringConverter.ToWideFromEnd(source.AsSpan(), result);
 
-            return result.Slice(0, length).ToString();
+            return result.Slice(startIndex).ToString();
         }
 
         /// <summary>
@@ -123,13 +124,14 @@ namespace JapaneseStringConverter
 
             var sourceSpan = source.AsSpan();
 
-            Span<char> result = sourceSpan.Length <= StringUtility.MaxWideCharLimit
-                ? stackalloc char[sourceSpan.Length]
-                : new char[sourceSpan.Length];
+            var requiredLength = sourceSpan.Length * 2;
+            Span<char> result = requiredLength <= StringUtility.MaxCharCount
+                ? stackalloc char[requiredLength]
+                : new char[requiredLength];
 
-            var length = Utf16StringConverter.ToHiragana(source.AsSpan(), ref result, false);
+            var startIndex = Utf16StringConverter.ToHiraganaFromEnd(source.AsSpan(), result);
 
-            return result.Slice(0, length).ToString();
+            return result.Slice(startIndex).ToString();
         }
 
         /// <summary>
@@ -161,13 +163,13 @@ namespace JapaneseStringConverter
 
             var sourceSpan = source.AsSpan();
 
-            Span<char> result = sourceSpan.Length <= StringUtility.MaxWideCharLimit
+            Span<char> result = sourceSpan.Length <= StringUtility.MaxCharCount
                 ? stackalloc char[sourceSpan.Length]
                 : new char[sourceSpan.Length];
 
-            var length = Utf16StringConverter.ToKatakana(source.AsSpan(), result);
+            var startIndex = Utf16StringConverter.ToKatakanaFromEnd(source.AsSpan(), result);
 
-            return result.Slice(0, length).ToString();
+            return result.Slice(startIndex).ToString();
         }
 
         /// <summary>
